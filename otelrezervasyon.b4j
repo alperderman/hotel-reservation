@@ -1,0 +1,233 @@
+﻿AppType=JavaFX
+Build1=Default,b4j.example
+File1=faturalar.bjl
+File10=listTipler.bjl
+File11=listView1.bjl
+File12=listView2.bjl
+File13=listView3.bjl
+File14=login.bjl
+File15=menu.bjl
+File16=odalar.bjl
+File17=rezervasyonlar.bjl
+File18=tableView1.bjl
+File19=tableView2.bjl
+File2=hizmetler.bjl
+File20=yeniDuzenle.bjl
+File21=yeniDuzenleFatura.bjl
+File22=yeniDuzenleHizmet.bjl
+File23=yeniDuzenleOda.bjl
+File24=yeniDuzenleSifre.bjl
+File25=yeniDuzenleTip.bjl
+File26=yeniRezervasyon.bjl
+File3=hizmetServis.bjl
+File4=hizmetServisYap.bjl
+File5=kullanici.bjl
+File6=listFaturalar.bjl
+File7=listHizmetler.bjl
+File8=listOdalar.bjl
+File9=listRezervasyonlar.bjl
+FileGroup1=Default Group
+FileGroup10=Default Group
+FileGroup11=Default Group
+FileGroup12=Default Group
+FileGroup13=Default Group
+FileGroup14=Default Group
+FileGroup15=Default Group
+FileGroup16=Default Group
+FileGroup17=Default Group
+FileGroup18=Default Group
+FileGroup19=Default Group
+FileGroup2=Default Group
+FileGroup20=Default Group
+FileGroup21=Default Group
+FileGroup22=Default Group
+FileGroup23=Default Group
+FileGroup24=Default Group
+FileGroup25=Default Group
+FileGroup26=Default Group
+FileGroup3=Default Group
+FileGroup4=Default Group
+FileGroup5=Default Group
+FileGroup6=Default Group
+FileGroup7=Default Group
+FileGroup8=Default Group
+FileGroup9=Default Group
+Group=Default Group
+Library1=cssutils
+Library2=javaobject
+Library3=jcore
+Library4=jfx
+Library5=jsql
+Library6=jxui
+Library7=xcustomlistview
+Module1=database
+Module10=FormMenu
+Module11=FormOdalar
+Module12=FormRezervasyonlar
+Module13=FormYeniDuzenleHizmet
+Module14=FormYeniDuzenleOda
+Module15=FormYeniDuzenleTip
+Module16=FormYeniRezervasyon
+Module2=FormDuzenleSifre
+Module3=FormFaturalar
+Module4=FormFaturaOde
+Module5=FormHizmetler
+Module6=FormHizmetServis
+Module7=FormHizmetServisYap
+Module8=FormKullanici
+Module9=FormLogin
+NumberOfFiles=26
+NumberOfLibraries=7
+NumberOfModules=16
+Version=8.8
+@EndOfDesignText@
+#Region Project Attributes 
+	#MainFormWidth: 600
+	#MainFormHeight: 600
+	#AdditionalJar: sqlite-jdbc-3.7.2 
+#End Region
+
+Sub Process_Globals
+	Private fx As JFX
+	Private MainForm As Form
+End Sub
+
+Sub AppStart (Form1 As Form, Args() As String)
+	MainForm = Form1
+	database.DBCon1.InitializeSQLite("../", "otel.db", False)
+	FormLogin.Show
+End Sub
+
+Public Sub ResultSetToListOfMaps(rs As ResultSet) As List
+	Dim ReturnList As List
+	ReturnList.Initialize
+	Do While rs.NextRow
+		Dim ThisMap As Map
+		ThisMap.Initialize
+		For col = 0 To rs.ColumnCount - 1
+			ThisMap.Put(rs.GetColumnName(col).ToLowerCase,rs.GetString2(col))
+		Next
+		ReturnList.Add(ThisMap)
+	Loop
+	rs.Close
+	Return ReturnList
+End Sub
+
+Public Sub MeasureTextWidth(Args As Map) As Double
+	Dim lbl As Label
+	Dim fnt As Font
+	lbl.Initialize("")
+	lbl.Text = Args.Get("text")
+	If Args.ContainsKey("font") Then
+		fnt = Args.Get("font")
+	Else if Args.ContainsKey("size") Then
+		Dim bold As Boolean
+		Dim italic As Boolean
+		If Args.ContainsKey("bold") Then
+			bold = Args.Get("bold")
+		Else
+			bold = False
+		End If
+		If Args.ContainsKey("italic") Then
+			italic = Args.Get("italic")
+		Else
+			italic = False
+		End If
+		fnt = fx.CreateFont(fx.DefaultFont(Args.Get("size")).FamilyName, Args.Get("size"), bold, italic)
+	Else
+		fnt = lbl.Font
+	End If
+	lbl.Font = fnt
+	MainForm.RootPane.AddNode(lbl, 0, 0, -1, -1)
+	lbl.Snapshot
+	lbl.RemoveNodeFromParent
+	Return lbl.Width
+End Sub
+
+Public Sub MeasureTextHeight(Args As Map) As Double
+	Dim lbl As Label
+	Dim fnt As Font
+	lbl.Initialize("")
+	lbl.Text = Args.Get("text")
+	If Args.ContainsKey("font") Then
+		fnt = Args.Get("font")
+	Else if Args.ContainsKey("size") Then
+		Dim bold As Boolean
+		Dim italic As Boolean
+		If Args.ContainsKey("bold") Then
+			bold = Args.Get("bold")
+		Else
+			bold = False
+		End If
+		If Args.ContainsKey("italic") Then
+			italic = Args.Get("italic")
+		Else
+			italic = False
+		End If
+		fnt = fx.CreateFont(fx.DefaultFont(Args.Get("size")).FamilyName, Args.Get("size"), bold, italic)
+	Else
+		fnt = lbl.Font
+	End If
+	lbl.Font = fnt
+	MainForm.RootPane.AddNode(lbl, 0, 0, -1, -1)
+	lbl.Snapshot
+	lbl.RemoveNodeFromParent
+	Return lbl.Height
+End Sub
+
+Public Sub MeasureTextHeight2(Args As Map) As Double
+	Dim lbl As Label
+	Dim fnt As Font
+	lbl.Initialize("")
+	lbl.Text = Args.Get("text")
+	If Args.ContainsKey("font") Then
+		fnt = Args.Get("font")
+	Else if Args.ContainsKey("size") Then
+		Dim bold As Boolean
+		Dim italic As Boolean
+		If Args.ContainsKey("bold") Then
+			bold = Args.Get("bold")
+		Else
+			bold = False
+		End If
+		If Args.ContainsKey("italic") Then
+			italic = Args.Get("italic")
+		Else
+			italic = False
+		End If
+		fnt = fx.CreateFont(fx.DefaultFont(Args.Get("size")).FamilyName, Args.Get("size"), bold, italic)
+	Else
+		fnt = lbl.Font
+	End If
+	lbl.Font = fnt
+	lbl.WrapText = True
+	MainForm.RootPane.AddNode(lbl, 0, 0, Args.Get("width"), -1)
+	lbl.Snapshot
+	lbl.RemoveNodeFromParent
+	Return lbl.Height
+End Sub
+
+Public Sub setTableColumnWidths(Table As TableView, Size() As Double)
+	If Table.ColumnsCount = Size.Length Then
+		Dim viewTable As B4XView = Table
+		For i = 0 To Table.ColumnsCount-1
+			Dim widthCol As Double
+			If Size(i) > 0 Then
+				widthCol = Size(i)
+			Else
+				Dim textTable As String = Table.GetColumnHeader(i)
+				Dim params As Map = CreateMap("text": textTable, "bold": True)
+				If viewTable.Font.IsInitialized Then
+					params.Put("font", viewTable.Font)
+				Else
+					params.Put("size", viewTable.TextSize)
+				End If
+				widthCol = MeasureTextWidth(params)+10
+				If Size(i) < 0 Then
+					widthCol = widthCol-Size(i)
+				End If
+			End If
+			Table.SetColumnWidth(i, widthCol)
+		Next
+	End If
+End Sub
